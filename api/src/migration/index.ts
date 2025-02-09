@@ -1,3 +1,6 @@
+import './Task';
+import './Tag';
+import './Task_tags';
 import database from '@database';
 
 export default async function init(): Promise<void> {

@@ -2,6 +2,7 @@ import app from '@app';
 import env from '@env';
 import routes from '@routes/index';
 import initMigrate from '@migration/index';
+import database from "@database";
 
 try {
     initMigrate();
