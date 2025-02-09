@@ -1,19 +1,8 @@
 name: 'desafio-back-end-postgres'
 services:
-  api:
-    container_name: 'desafio-back-end-postgres-api'
-    image: 'node:alpine'
-    ports:
-      - '${PORT:-3000}:3000'
-    entrypoint: /bin/sh
-    working_dir: /srv/app
-    volumes:
-        - type: bind
-          source: ./
-          target: /srv/app
-    tty: true
   postgres:
     image: 'postgres'
+    container_name: 'desafio-back-end-postgres-database'
     ports:
       - '${DATABASE_PORT:-5432}:5432'
     environment:
