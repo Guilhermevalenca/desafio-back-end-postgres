@@ -32,14 +32,6 @@ export default class TaskController extends Controller {
 
     async update(req: Request, res: Response): Promise<void> {
         try {
-            // const response = await Task.update(
-            //     req.body,
-            //     {
-            //         where: {
-            //             id: Number(req.params.id)
-            //         }
-            //     }
-            // );
             const response = await req.body.modelObj.update(req.body);
             res.status(200)
                 .json(response);

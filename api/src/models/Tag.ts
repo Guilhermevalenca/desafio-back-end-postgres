@@ -1,6 +1,5 @@
 import database from "@database";
 import {DataTypes} from "sequelize";
-import Task from "./Task";
 
 export default database.define(
     'task',
