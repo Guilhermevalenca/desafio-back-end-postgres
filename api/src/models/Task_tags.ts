@@ -1,5 +1,5 @@
-import Task from '@migration/Task';
-import Tag from '@migration/Tag';
+import Task from './Task';
+import Tag from './Tag';
 
 Task.belongsToMany(Tag, {
     through: 'Task_Tags',

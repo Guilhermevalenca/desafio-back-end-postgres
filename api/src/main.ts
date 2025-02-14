@@ -1,8 +1,9 @@
 import app from '@app';
 import env from '@env';
 import routes from '@routes/index';
-import initMigrate from '@migration/index';
+import initMigrate from './models/index';
 import database from "@database";
+import Task from "@models/Task";
 
 try {
     initMigrate();

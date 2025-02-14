@@ -1,3 +1,5 @@
+import taskRoutes from "@routes/taskRoutes";
+
 export default function() {
-    //declare all routes
+   taskRoutes();
 }

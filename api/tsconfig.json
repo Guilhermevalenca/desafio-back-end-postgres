@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "CommonJS",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -14,7 +14,7 @@
       "@controllers/*": ["src/controllers/*"],
       "@middlewares/*": ["src/middlewares/*"],
       "@routes/*": ["src/routes/*"],
-      "@migration/*": ["src/migration/*"]
+      "@models/*": ["src/models/*"]
    }
   }
 }
