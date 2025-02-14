@@ -11,7 +11,7 @@ app.use(cors({
     credentials: true
 }));
 app.use(session({
-    secret: env.API_KEY_SECRET,
+    secret: env.API_KEY_SECRET ?? 'secret',
     resave: true,
     saveUninitialized: true
 }));
