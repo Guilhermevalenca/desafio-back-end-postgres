@@ -1,7 +1,8 @@
 export default function() {
+
     return (
         <>
-            <div>App component</div>
+            <div className="tw-text-center">App component</div>
         </>
     )
 }
