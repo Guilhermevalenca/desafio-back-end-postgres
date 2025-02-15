@@ -14,7 +14,7 @@ export class FindMiddleware extends Middleware{
         super()
     }
 
-    async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
+    handle = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const { id } = req.params;
         if(!id) {
             res.status(404);

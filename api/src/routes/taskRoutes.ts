@@ -2,9 +2,10 @@ import app from '@app';
 import TaskController from '@controllers/TaskController';
 import Middleware, { FindMiddleware } from "@middlewares/index";
 import TaskValidation from "@middlewares/TaskValidation";
+import Controller from "@controllers/index";
 
 export default function() {
-    const taskController: TaskController = new TaskController();
+    const taskController: Controller = new TaskController();
     const taskValidation: Middleware = new TaskValidation();
     const taskFind: FindMiddleware = new FindMiddleware('Task');
 
@@ -13,17 +14,7 @@ export default function() {
         .post(taskValidation.handle, taskController.store);
 
     app.route('/tasks/:id')
-        .get(
-            (...params) => taskFind.handle(...params),
-            taskController.show
-        )
-        .put(
-            (...params) => taskFind.handle(...params),
-            taskValidation.handle,
-            taskController.update
-        )
-        .delete(
-            (...params) => taskFind.handle(...params),
-            taskController.destroy
-        );
+        .get(taskFind.handle, taskController.show)
+        .put(taskFind.handle, taskValidation.handle, taskController.update)
+        .delete(taskFind.handle, taskController.destroy);
 }
