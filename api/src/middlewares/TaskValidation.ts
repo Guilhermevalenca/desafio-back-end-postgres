@@ -9,7 +9,7 @@ export default class TaskValidation extends Middleware {
             title: z.string(),
             status: z.enum(['pending', 'in_progress', 'completed']).default('pending'),
             color: z.string(),
-            priority: z.number().min(0),
+            priority: z.number().min(1).max(10),
             description: z.string(),
         });
         const result = taskSchema.safeParse(req.body);
