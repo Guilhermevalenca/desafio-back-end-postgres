@@ -23,7 +23,8 @@ export default database.define(
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                min: 0
+                min: 1,
+                max: 10,
             },
         },
         description: {
