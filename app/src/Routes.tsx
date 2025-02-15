@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router";
-import App from "./pages/App.tsx";
-import Default from "./layouts/Default.tsx";
+import App from "@pages/App.tsx";
+import Default from "@layouts/Default.tsx";
 
 export default function() {
     return (
