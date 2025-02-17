@@ -36,4 +36,30 @@ export default class TaskValidation extends Middleware {
         }
         next();
     }
+
+    async subHandle(req: Request, res: Response, next: NextFunction): Promise<void> {
+        const taskSchema = z.object({
+            tags: z.array(z.object({
+                id: z.number()
+            })).refine(async () => {
+                const ids = await Tag.findAll({
+                    where: {
+                        id: req.body.tags.map((tag: any) => tag.id)
+                    },
+                    attributes: ['id']
+                });
+                return ids.length === req.body.tags.length;
+            })
+        });
+
+        const result = await taskSchema.safeParseAsync(req.body);
+        if (!result.success) {
+            res.status(400)
+                .json({
+                    error: result.error,
+                });
+            return;
+        }
+        next();
+    }
 }

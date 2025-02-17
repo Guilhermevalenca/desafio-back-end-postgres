@@ -50,18 +50,51 @@ export default class TaskController extends Controller {
         res.status(200)
             .json({
                 ...req.body.modelObj.dataValues,
-                tags: await req.body.modelObj.getTags()
+                tags: await Tag.findAll({
+                    include: {
+                        model: Task,
+                        through: {
+                            attributes: []
+                        },
+                        where: {
+                            id: req.body.modelObj.id
+                        },
+                        attributes: [],
+                    }
+                })
             });
     };
 
     async update(req: Request, res: Response): Promise<void> {
         try {
-            const response = await req.body.modelObj.update(req.body, {
-                include: [Tag]
-            });
+            const response = await req.body.modelObj.update(req.body);
             res.status(200)
                 .json(response);
         } catch (e) {
+            res.status(500)
+                .json(e);
+        }
+    };
+
+    async updateTags(req: Request, res: Response): Promise<void> {
+        const transaction = await database.transaction();
+        try {
+            await TaskTags.destroy({
+                where: {
+                    task_id: req.body.modelObj.id
+                }
+            });
+            await TaskTags.bulkCreate(
+                req.body.tags.map((tag: any) => ({
+                        task_id: req.body.modelObj.id,
+                        tag_id: tag.id
+                    })
+                ));
+            await transaction.commit();
+            res.status(204)
+                .end();
+        } catch (e) {
+            await transaction.rollback();
             res.status(500)
                 .json(e);
         }

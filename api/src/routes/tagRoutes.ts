@@ -7,7 +7,7 @@ import Controller from "@controllers/index";
 export default function() {
     const tagController: Controller = new TagController();
     const tagValidation: Middleware = new TagValidation();
-    const findMiddleware: Middleware = new FindMiddleware('Tag');
+    const findMiddleware: Middleware = new FindMiddleware('tag');
 
     app.route('/tags')
         .get(tagController.index)
