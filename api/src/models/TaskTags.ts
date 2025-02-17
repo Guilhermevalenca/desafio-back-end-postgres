@@ -3,16 +3,18 @@ import Tag from "@models/Tag";
 import Task from "@models/Task";
 
 const TaskTags = database.define(
-    'Task_Tags',
+    'task_tags',
     {}
 );
 
 Task.belongsToMany(Tag, {
-    through: TaskTags
+    through: TaskTags,
+    foreignKey: 'task_id'
 });
 
 Tag.belongsToMany(Task, {
-    through: TaskTags
+    through: TaskTags,
+    foreignKey: 'tag_id'
 });
 
 export default TaskTags;

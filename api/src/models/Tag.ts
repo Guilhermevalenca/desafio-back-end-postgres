@@ -2,7 +2,7 @@ import database from "@database";
 import {DataTypes} from "sequelize";
 
 export default database.define(
-    'Tag',
+    'tag',
     {
         id: {
             type: DataTypes.INTEGER,
