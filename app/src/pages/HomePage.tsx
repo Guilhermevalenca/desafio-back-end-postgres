@@ -1,21 +1,56 @@
 import Table from '@components/Table.tsx';
 import Row, { Td, Th } from "@components/Row.tsx";
 import { useState, useEffect } from "react";
-import Task, { type TaskType } from "../classes/Task.ts";
+import Task from "../classes/Task.ts";
 import Tooltip from "@components/tooltip.tsx";
 import { useNavigate } from "react-router";
 import Button from "@components/Button.tsx";
+import Swal from "sweetalert2";
 
 export default function() {
-    const [tasks, setTasks] = useState<(Task | TaskType)[]>([]);
+    const [tasks, setTasks] = useState<Task[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {
+        Swal.fire({
+            title: 'Loading tasks',
+            didOpen: () => {
+                Swal.showLoading();
+            },
+            didClose: () => {
+                Swal.hideLoading();
+            }
+        });
         Task.all()
             .then((res) => {
                 setTasks(res);
+                setTimeout(() => {
+                    Swal.close();
+                }, 300);
             })
     }, []);
+
+    async function deleteTask(task: Task) {
+        Swal.fire({
+            title: 'Deleting task',
+            didOpen: () => {
+                Swal.showLoading();
+            },
+            didClose: () => {
+                Swal.hideLoading();
+            }
+        })
+
+        try {
+            await task.delete();
+            setTasks(tasks.filter((t) => t.id !== task.id));
+            setTimeout(() => {
+                Swal.close();
+            }, 300);
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     return (
         <>
@@ -60,7 +95,7 @@ export default function() {
                             <Td>
                                 <span className="tw-grid tw-gap-2">
                                     <Button>Edit</Button>
-                                    <Button variant="danger">Delete</Button>
+                                    <Button variant="danger" onClick={() => deleteTask(task)}>Delete</Button>
                                 </span>
                             </Td>
                         </Row>

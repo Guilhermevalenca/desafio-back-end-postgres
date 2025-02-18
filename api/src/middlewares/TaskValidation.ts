@@ -10,7 +10,6 @@ export default class TaskValidation extends Middleware {
         const taskSchema = z.object({
             title: z.string(),
             status: z.enum(['pending', 'in_progress', 'completed']).default('pending'),
-            color: z.string(),
             priority: z.number().min(1).max(10),
             description: z.string().optional(),
             tags: z.array(z.object({

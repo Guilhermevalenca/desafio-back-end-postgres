@@ -1,8 +1,12 @@
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import HomePage from "@pages/HomePage.tsx";
 import Default from "@layouts/Default.tsx";
-import Create from "@pages/tasks/create.tsx";
+import CreateTask from "@pages/tasks/create.tsx";
 import TaskLayout from "@layouts/TaskLayout.tsx";
+import EditTask from "@pages/tasks/Edit.tsx";
+import IndexTags from '@pages/tags/index.tsx';
+import CreateTag from '@pages/tags/Create.tsx';
+import EditTag from '@pages/tags/Edit.tsx';
 
 export default function() {
     return (
@@ -10,11 +14,20 @@ export default function() {
             <Routes>
                 <Route path="/" element={<Default />} >
                     <Route index element={<HomePage />} />
+
                     <Route path="tasks" element={<TaskLayout />}>
-                        <Route path="create" element={<Create />} />
+                        <Route index element={<Navigate to="/" />} />
+                        <Route path="create" element={<CreateTask />} />
+                        <Route path="edit/:id" element={<EditTask />} />
                     </Route>
 
-                    <Route path="*" element={<h1>Pagina não encontrada</h1>} />
+                    <Route path="tags">
+                        <Route index element={<IndexTags />} />
+                        <Route path="create" element={<CreateTag />} />
+                        <Route path="edit/:id" element={<EditTag />} />
+                    </Route>
+
+                    <Route path="*" element={<Navigate to="/" />} />
                 </Route>
             </Routes>
         </BrowserRouter>

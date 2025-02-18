@@ -2,12 +2,16 @@ import Form from "@components/Form.tsx";
 import Input from "@components/Input.tsx";
 import Task from "../../classes/Task.ts";
 import Select from "@components/Select.tsx";
-import {useEffect, useState} from "react";
-import Tag, {TagType} from "../../classes/Tag.ts";
-import {OptionCheckbox} from "@components/Option.tsx";
+import { type FormEvent, useEffect, useState } from "react";
+import Tag, { type TagType } from "../../classes/Tag.ts";
+import { OptionCheckbox } from "@components/Option.tsx";
 import Button from "@components/Button.tsx";
+import { useNavigate } from "react-router";
+import Swal from 'sweetalert2';
 
 export default function() {
+    const navigate = useNavigate();
+
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [priority, setPriority] = useState(10);
@@ -24,11 +28,6 @@ export default function() {
     useEffect(() => {
         Tag.all()
             .then((res) => {
-                // const newArray = [];
-                // for(let i = 0; i < 10; i++) {
-                //     newArray.push(...res);
-                // }
-                // setAllTags(newArray);
                 setAllTags(res);
             })
     }, []);
@@ -48,11 +47,36 @@ export default function() {
         }
     }
 
+    async function submit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Creating task',
+            didOpen: () => {
+                Swal.showLoading();
+            },
+            didClose: () => {
+                Swal.hideLoading();
+            }
+        });
+
+        try {
+            await task.save();
+            setTimeout(() => {
+                Swal.close();
+                navigate('/');
+            }, 300);
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
     return (
         <>
             <section className="tw-w-1/2 tw-mx-auto tw-my-5">
                 <Form
                     title="Create task"
+                    onSubmit={submit}
                 >
                     <Input
                         label="title"
