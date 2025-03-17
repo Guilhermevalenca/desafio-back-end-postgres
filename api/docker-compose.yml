@@ -1,0 +1,11 @@
+name: 'desafio-back-end-postgres'
+services:
+  postgres:
+    image: 'postgres'
+    container_name: 'desafio-back-end-postgres-database'
+    ports:
+      - '${DATABASE_PORT:-5432}:5432'
+    environment:
+      POSTGRES_USER: '${DATABASE_USER:-postgres}'
+      POSTGRES_PASSWORD: '${DATABASE_PASSWORD:-postgres}'
+      POSTGRES_DB: '${DATABASE_NAME:-postgres}'
