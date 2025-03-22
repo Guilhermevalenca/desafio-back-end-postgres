@@ -1,6 +1,6 @@
 export type ButtonProps = JSX.IntrinsicElements['button'] & {
     children: React.ReactNode;
-    variant?: 'default' | 'danger';
+    variant?: 'default' | 'danger' | 'secondary';
 }
 
 export default function(props: ButtonProps) {
@@ -9,6 +9,8 @@ export default function(props: ButtonProps) {
         color = 'tw-bg-blue-500';
     } else if(props.variant === 'danger') {
         color = 'tw-bg-red-500';
+    } else if(props.variant === 'secondary') {
+        color = 'tw-bg-green-500';
     }
     return (
         <button

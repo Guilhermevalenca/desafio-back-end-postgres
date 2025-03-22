@@ -1,9 +1,9 @@
 import Form from "@components/Form.tsx";
 import Input from "@components/Input.tsx";
-import Task from "../../classes/Task.ts";
+import Task from "@classes/Task.ts";
 import Select from "@components/Select.tsx";
 import { type FormEvent, useEffect, useState } from "react";
-import Tag, { type TagType } from "../../classes/Tag.ts";
+import Tag, { type TagType } from "@classes/Tag.ts";
 import { OptionCheckbox } from "@components/Option.tsx";
 import Button from "@components/Button.tsx";
 import { useNavigate } from "react-router";
@@ -64,7 +64,21 @@ export default function() {
             await task.save();
             setTimeout(() => {
                 Swal.close();
-                navigate('/');
+
+                Swal.fire({
+                    title: 'Task created',
+                    icon: 'success',
+                    confirmButtonText: 'Go to home page',
+                    cancelButtonText: 'Create another task',
+                    showCancelButton: true,
+                    showConfirmButton: true,
+                }).then((res) => {
+                    if(res.isConfirmed) {
+                        navigate('/');
+                    } else if(res.isDismissed) {
+                        navigate('/tasks/create');
+                    }
+                });
             }, 300);
         } catch(e) {
             console.log(e);

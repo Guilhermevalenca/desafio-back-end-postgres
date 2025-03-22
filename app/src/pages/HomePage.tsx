@@ -56,9 +56,16 @@ export default function() {
         <>
             <div className="tw-text-center tw-text-2xl">Todo List</div>
             <section className="tw-w-1/2 tw-mx-auto tw-my-5">
-                <Button
-                    onClick={() => navigate('/tasks/create')}
-                >Create task</Button>
+                <div className="tw-flex tw-gap-4">
+                    <Button
+                        onClick={() => navigate('/tasks/create')}
+                    >Create task</Button>
+
+                    <Button
+                        onClick={() => navigate('/tags/create')}
+                        variant="secondary"
+                    >Create tag</Button>
+                </div>
 
                 <Table>
                     <thead>
@@ -86,7 +93,11 @@ export default function() {
                                             text={tag.name}
                                         >
                                             <span
-                                                className={"tw-px-2 tw-py-1  tw-rounded-full tw-bg-" + `[${tag.color}]`}
+                                                className={"tw-px-2 tw-py-1  tw-rounded-full tw-border-4 tw-text-white"}
+                                                style={{
+                                                    backgroundColor: tag.color
+                                                }}
+                                                onClick={() => navigate('/tags/edit/' + tag.id)}
                                             >{tag.name[0]}</span>
                                         </Tooltip>
                                     ))}
@@ -94,7 +105,7 @@ export default function() {
                             </Td>
                             <Td>
                                 <span className="tw-grid tw-gap-2">
-                                    <Button>Edit</Button>
+                                    <Button onClick={() => navigate('/tasks/edit/' + task.id)}>Edit</Button>
                                     <Button variant="danger" onClick={() => deleteTask(task)}>Delete</Button>
                                 </span>
                             </Td>

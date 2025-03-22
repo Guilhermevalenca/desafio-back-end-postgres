@@ -28,6 +28,11 @@ export default class Tag implements TagType {
             });
     }
 
+    static async getById(id: number): Promise<Tag> {
+        return axios.get('/tags/' + id)
+            .then((res) => new Tag(res.data));
+    }
+
     async save(): Promise<AxiosResponse<TagType>> {
         if(this.id) {
             return axios.put(`/tags/${this.id}`, this as TagType);

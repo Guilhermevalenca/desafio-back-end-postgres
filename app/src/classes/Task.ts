@@ -44,6 +44,11 @@ export default class Task implements TaskType {
             });
     }
 
+    static async getById(id: number): Promise<Task> {
+        return axios.get('tasks/' + id)
+            .then((res) => new Task(res.data));
+    }
+
     async save(): Promise<AxiosResponse<TaskType>> {
         if(this.id) {
             return axios.put(`/tasks/${this.id}`, this as TaskType);
